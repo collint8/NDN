@@ -5,13 +5,13 @@ int main()
   Classy fst;
   Classy snd;
   fst.setName("First one Suckers");
-  snd.setName("shrtnme");
+  snd.setName("Something much much longer");
   fst.setType(true);
   snd.setType(false);
   cout << fst.getName()<<"\n";
   fst.getType();
   
-  Classy * ptr = (Classy *) &snd;
+  //Classy * ptr = (Classy *) &snd;
   int l = sizeof(snd);
   for(int i = 0; i < l; i++)
   {
@@ -26,7 +26,7 @@ int main()
     lis[i] = *(data+i);
     printf("%02X%c", *(data+i), (i%16==15)?'\n':' ');
   }  
-  ptr = reinterpret_cast<Classy*>(lis);
+  Classy * ptr = reinterpret_cast<Classy*>(lis);
   cout << "\n" << ptr->getName()<<"\n";
   ptr->getType();
 }
