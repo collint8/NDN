@@ -74,16 +74,21 @@ void setup()
 void loop(void)
 {   
     Classy obj;
-    uint8_t * ptr = (uint8_t *) &obj;
     string m;
     getline(cin, m);
     char *cstr = &m[0];
     obj.setName(m);
     obj.setType(true);// Send message1 and print the result
-    uint16_t l = sizeof(obj);
-    cout << ptr << "\n";
+    int l = sizeof(obj);
+    uint8_t * data = reinterpret_cast<uint8_t*>(&obj);
     cout << l << "\n";
-    e = sx1272.sendPacketTimeoutACKRetries(8, ptr, l, (uint16_t ) 1000 );
+    cout << "Contents of obj\n";
+    for (int i = 0; i<l; i++)
+    { 
+      printf("%02X%c",*(data+i),(i%16==15)?'\n':' ');
+    } 
+      cout <<'\n' << sizeof(*data)<< "data\n" << *data << '\n';
+    e = sx1272.sendPacketTimeoutACKRetries(8, data, l, (uint16_t ) 1000 );
     printf("Packet sent, state %d\n",e);
     
 }
