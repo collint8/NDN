@@ -74,29 +74,20 @@ void loop(Classy obj)
   if ( e == 0 )
   {
     printf("Receive packet with ACK and retries, state %d\n",e);
-    obj.setName("default value");
-    obj.setType(false);
-    printf("%s\n",obj.getName());
-    obj.getType();
-    Classy * ptr = &obj;
-    printf("Printing pointer %d \n",ptr);
-    printf("%d, %d\n", sizeof(obj), sx1272.packet_received.length);
-    for (unsigned int i = 0; i < sx1272.packet_received.length; i++)
+    int l = sx1272.packet_received.length;
+    uint8_t data [l-5];
+    for (unsigned int i = 0; i < l-5; i++)
     {
-      printf("%d, %d, ",(i),*(ptr+i));
-      my_packet[i] = (uint8_t)sx1272.packet_received.data[i];
-      *ptr = (Classy) sx1272.packet_received.data;
-      //if(i < sizeof(obj))
-         //*(ptr+i) = sx1272.packet_received.data[i];
-      printf("%d \n " , (uint8_t) my_packet[i]);
-      if (i < 45){
-        //*(ptr+i + 1) = my_packet[2*i];
-      }
+      data[i] = (uint8_t)sx1272.packet_received.data[i];
+      printf("%02X%c",data[i], (i%16==15)?'\n':' ');
     }
-    //obj = *(&my_packet+1);
-    obj.getType();
-    //printf("%s\n",obj.getName());
-    printf("\nMessage: %s\n", my_packet);
+    
+
+
+    Classy* obj = reinterpret_cast<Classy*>(data);
+    obj->getType();
+    printf("%s\n",obj->getName());
+    //printf("\nMessage: %s\n", my_packet);
   }
   else {
    // printf("Transmission Failed, state %d\n",e);

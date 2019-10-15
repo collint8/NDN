@@ -31,9 +31,9 @@ class Classy
     bool getType()
     {
       if (type)
-        cout << "This is an interest packet";
+        cout << "This is an interest packet\n";
       else
-        cout << "This is a data packet";
+        cout << "This is a data packet\n";
       return type;
     }
 };
